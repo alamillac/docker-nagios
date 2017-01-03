@@ -49,6 +49,30 @@ cd /tmp/nrpe-3.0/
 make all
 make install-plugin
 
+#installing check_rabbitmq Plugin
+cd /tmp
+wget --no-check-certificate https://github.com/jamesc/nagios-plugins-rabbitmq/archive/master.zip
+unzip master.zip
+rm master.zip
+mv nagios-plugins-rabbitmq-master/scripts/ /usr/local/nagios/libexec/rabbitmq/
+
+#check_rabbitmq dependencies:
+export PERL_MM_USE_DEFAULT=1
+cpan inc::Module::Install
+cpan Params::Validate
+cpan Math::Calc::Units
+cpan Config::Tiny
+cpan JSON
+cpan Class::Accessor
+cpan LWP::UserAgent
+
+wget https://github.com/monitoring-plugins/monitoring-plugin-perl/archive/master.zip
+unzip master.zip
+cd monitoring-plugin-perl-master
+perl Makefile.PL
+make
+make install
+
 #to fix error relate to ip address of container apache2
 echo "ServerName localhost" | tee /etc/apache2/conf-available/fqdn.conf
 ln -s /etc/apache2/conf-available/fqdn.conf /etc/apache2/conf-enabled/fqdn.conf
