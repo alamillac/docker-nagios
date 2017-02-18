@@ -79,9 +79,6 @@ ln -s /etc/apache2/conf-available/fqdn.conf /etc/apache2/conf-enabled/fqdn.conf
 
 a2enmod cgi
 
-# Set nagiosadmin passwd if not exist the file htpasswd.users
-HTPASSWD_FILE=/usr/local/nagios/etc/htpasswd.users
-[ -r "$HTPASSWD_FILE" ] || htpasswd -b -c $HTPASSWD_FILE nagiosadmin admin
-
+htpasswd -b -c /usr/local/nagios/etc/htpasswd.users nagiosadmin admin
 sed -i 's/#Include.*/Include conf-available\/nagios.conf/' /etc/apache2/sites-enabled/000-default.conf
 rm -rf /tmp/* /var/tmp/*

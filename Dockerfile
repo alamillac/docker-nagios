@@ -21,13 +21,12 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q wget \
                     libdigest-hmac-perl \
                     libnet-snmp-perl \
                     libcrypt-des-perl \
-                    mailutils
+                    mailutils \
+                    python-pip
 
 COPY pre-conf.sh /sbin/pre-conf
 RUN chmod +x /sbin/pre-conf ; sync
 RUN /bin/bash -c /sbin/pre-conf && rm /sbin/pre-conf
-
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q python-pip
 
 COPY ./etc /etc
 
